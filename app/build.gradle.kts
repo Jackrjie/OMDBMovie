@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -8,6 +10,9 @@ plugins {
 android {
     namespace = "com.jackrjie.omdbmovie"
     compileSdk = 34
+
+    val mProperties = Properties()
+    mProperties.load(project.rootProject.file("local.properties").inputStream())
 
     defaultConfig {
         applicationId = "com.jackrjie.omdbmovie"
@@ -22,13 +27,24 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
+        debug {
+            isDebuggable = true
+            buildConfigField("String","BASE_URL", "\"https://www.omdbapi.com/\"")
+            buildConfigField("String","API_KEY", mProperties.getProperty("API_KEY"))
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String","BASE_URL", "\"https://www.omdbapi.com/\"")
+            buildConfigField("String","API_KEY", mProperties.getProperty("API_KEY"))
         }
     }
     compileOptions {
