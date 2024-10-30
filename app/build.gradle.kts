@@ -1,11 +1,18 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.dagger.hilt.android)
 }
 
 android {
     namespace = "com.jackrjie.omdbmovie"
     compileSdk = 34
+
+    val mProperties = Properties()
+    mProperties.load(project.rootProject.file("local.properties").inputStream())
 
     defaultConfig {
         applicationId = "com.jackrjie.omdbmovie"
@@ -20,13 +27,24 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
+        debug {
+            isDebuggable = true
+            buildConfigField("String","BASE_URL", "\"https://www.omdbapi.com/\"")
+            buildConfigField("String","API_KEY", mProperties.getProperty("API_KEY"))
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String","BASE_URL", "\"https://www.omdbapi.com/\"")
+            buildConfigField("String","API_KEY", mProperties.getProperty("API_KEY"))
         }
     }
     compileOptions {
@@ -51,14 +69,17 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
+    implementation(libs.bundles.androidx.bundle)
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
+
+    implementation(libs.bundles.hilt.bundle)
+    implementation(libs.bundles.retrofit.bundle)
+    implementation(libs.bundles.room.bundle)
+    implementation(libs.bundles.coil.bundle)
+
+    kapt(libs.androidx.hilt.compiler)
+    kapt(libs.androidx.room.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
