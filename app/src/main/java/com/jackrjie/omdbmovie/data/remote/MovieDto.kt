@@ -1,5 +1,6 @@
 package com.jackrjie.omdbmovie.data.remote
 
+import com.jackrjie.omdbmovie.data.local.MovieEntity
 import com.jackrjie.omdbmovie.domain.model.Movie
 import com.squareup.moshi.Json
 
@@ -17,9 +18,9 @@ data class Search(
     @Json(name = "imdbID") val imdbID: String
 )
 
-fun MovieDto.toMovies() :List<Movie> {
+fun MovieDto.toMovieEntities() :List<MovieEntity> {
     return search.map { search ->
-        Movie(
+        MovieEntity(
             poster = search.poster,
             title = search.title,
             year = search.year,

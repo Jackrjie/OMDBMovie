@@ -11,6 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.jackrjie.omdbmovie.presentation.dashboard.DashboardViewModel
 import com.jackrjie.omdbmovie.ui.theme.OMDBMovieTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,6 +23,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             OMDBMovieTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    val viewModel = hiltViewModel<DashboardViewModel>()
+                    val movies = viewModel.moviePagingFlow.collectAsLazyPagingItems()
+
                     Greeting(
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)

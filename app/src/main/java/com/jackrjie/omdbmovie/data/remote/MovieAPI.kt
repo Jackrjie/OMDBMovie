@@ -8,7 +8,7 @@ interface MovieAPI {
 
     @GET(".")
     suspend fun getMovies(
-        @Query("s") movieTitle :String,
+        @Query("s") title :String,
         @Query("page") page: Int,
         @Query("apikey") apiKey: String = BuildConfig.API_KEY
     ) : MovieDto
