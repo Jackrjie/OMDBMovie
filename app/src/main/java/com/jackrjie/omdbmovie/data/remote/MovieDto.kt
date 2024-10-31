@@ -1,30 +1,30 @@
 package com.jackrjie.omdbmovie.data.remote
 
+import com.google.gson.annotations.SerializedName
 import com.jackrjie.omdbmovie.data.local.MovieEntity
-import com.jackrjie.omdbmovie.domain.model.Movie
-import com.squareup.moshi.Json
 
 data class MovieDto(
-    @Json(name = "Response") val response: String,
-    @Json(name = "Search") val search: List<Search>,
+    @SerializedName("Response") val response: String,
+    @SerializedName("Search") val search: List<Search>,
     val totalResults: String
 )
 
 data class Search(
-    @Json(name = "Poster") val poster: String,
-    @Json(name = "Title") val title: String,
-    @Json(name = "Type") val type: String,
-    @Json(name = "Year") val year: String,
-    @Json(name = "imdbID") val imdbID: String
+    @SerializedName("Poster") val poster: String,
+    @SerializedName("Title") val title: String,
+    @SerializedName("Type") val type: String,
+    @SerializedName("Year") val year: String,
+    @SerializedName("imdbID") val imdbID: String
 )
 
-fun MovieDto.toMovieEntities() :List<MovieEntity> {
+fun MovieDto.toMovieEntities(page: Int) :List<MovieEntity> {
     return search.map { search ->
         MovieEntity(
             poster = search.poster,
             title = search.title,
             year = search.year,
-            imdbID = search.imdbID
+            imdbID = search.imdbID,
+            page = page
         )
     }
 }
