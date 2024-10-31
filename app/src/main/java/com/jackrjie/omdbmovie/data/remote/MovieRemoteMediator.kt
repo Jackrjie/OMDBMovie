@@ -29,14 +29,13 @@ class MovieRemoteMediator @Inject constructor(
                     endOfPaginationReached = true
                 )
                 LoadType.APPEND -> {
-//                    val lastItem = state.lastItemOrNull()
-//                    if (lastItem == null) {
-//                        1
-//                    } else {
-//                        (lastItem.imd  / state.config.pageSize) + 1
-//                    }
-                    state.lastItemOrNull() ?: return MediatorResult.Success(endOfPaginationReached = true)
-                    state.pages.size + 1
+                    val lastItem = state.lastItemOrNull()
+
+                    if (lastItem == null) {
+                        return MediatorResult.Success(endOfPaginationReached = true)
+                    } else {
+                        (lastItem.page) + 1
+                    }
                 }
             }
 
@@ -44,7 +43,7 @@ class MovieRemoteMediator @Inject constructor(
                 title = title,
                 page = loadKey
             )
-            val response = movies.toMovieEntities()
+            val response = movies.toMovieEntities(loadKey)
 
             db.withTransaction {
                 if(loadType == LoadType.REFRESH) {
