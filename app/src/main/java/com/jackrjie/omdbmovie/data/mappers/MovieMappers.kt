@@ -11,12 +11,3 @@ fun MovieEntity.toMovie(): Movie {
         year = year
     )
 }
-
-fun Movie.toMovieEntity(): MovieEntity {
-    return MovieEntity(
-        imdbID = imdbID,
-        poster = poster,
-        title = title,
-        year = year
-    )
-}

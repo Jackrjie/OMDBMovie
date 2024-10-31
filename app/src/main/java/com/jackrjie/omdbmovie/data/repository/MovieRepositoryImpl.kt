@@ -16,12 +16,12 @@ class MovieRepositoryImpl @Inject constructor(
     private val database: MovieDatabase
 ) : MovieRepository {
 
-    override fun getMovies(title: String): Pager<Int, MovieEntity> {
-        val pagingSourceFactory = { database.dao().getMovies("%$title%") }
+    override fun getMovies(search: String): Pager<Int, MovieEntity> {
+        val pagingSourceFactory = { database.dao().getMovies("%$search%") }
 
         return Pager(
             config = PagingConfig(pageSize = 10, prefetchDistance = 5, enablePlaceholders = false),
-            remoteMediator = MovieRemoteMediator(title, movieAPI, database),
+            remoteMediator = MovieRemoteMediator(search, movieAPI, database),
             pagingSourceFactory = pagingSourceFactory
         )
     }

@@ -6,10 +6,10 @@ import retrofit2.http.Query
 
 interface MovieAPI {
 
-    @GET(".")
+    @GET("/")
     suspend fun getMovies(
+        @Query("apikey") apiKey: String = BuildConfig.API_KEY,
         @Query("s") title :String,
         @Query("page") page: Int,
-        @Query("apikey") apiKey: String = BuildConfig.API_KEY
     ) : MovieDto
 }

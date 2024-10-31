@@ -8,5 +8,6 @@ data class MovieEntity(
     @PrimaryKey val imdbID: String,
     val poster: String,
     val title: String,
-    val year: String
+    val year: String,
+    val page: Int
 )

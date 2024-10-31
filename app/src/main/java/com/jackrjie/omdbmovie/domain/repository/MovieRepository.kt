@@ -5,5 +5,5 @@ import com.jackrjie.omdbmovie.data.local.MovieEntity
 
 interface MovieRepository {
 
-    fun getMovies(title: String): Pager<Int, MovieEntity>
+    fun getMovies(search: String): Pager<Int, MovieEntity>
 }
