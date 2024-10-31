@@ -49,7 +49,7 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 coil-kt = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 retrofit-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+retrofit-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "httpLogging" }
 
 [plugins]
@@ -85,7 +85,7 @@ hilt-bundle = [
 ]
 retrofit-bundle = [
     "retrofit-retrofit",
-    "retrofit-converter-gson",
+    "retrofit-converter-moshi",
     "okhttp-logging"
 ]
 coil-bundle = [
